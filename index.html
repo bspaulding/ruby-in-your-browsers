@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="reveal.js/css/reveal.min.css"/>
+	<link rel="stylesheet" href="editor.css"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme">
+
+
+    <!-- For syntax highlighting using highlight.js-->
+    <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+
+  <link rel="stylesheet" media="print" href="reveal.js/css/print/pdf.css" />
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section id="is-that-a-ruby-in-your-browsers" class="slide level1">
+<h1>Is That a Ruby In Your Browsers?</h1>
+<p>github/<strong>bspaulding</strong></p>
+<p>twitter/<strong>bradspaulding</strong></p>
+</section>
+<section id="what-is-opal" class="slide level1">
+<h1>What Is Opal?</h1>
+<ul>
+<li>A Ruby to JavaScript Transpiler</li>
+<li>Includes Bridging to JS</li>
+</ul>
+</section>
+<section id="how-ruby-is-it" class="slide level1">
+<h1>How Ruby is it?</h1>
+<h2 id="rubyspec">RubySpec</h2>
+<p>TODO: RubySpec stats</p>
+</section>
+<section id="how-ruby-is-it-1" class="slide level1">
+<h1>How Ruby is it?</h1>
+<h2 id="missing-a-few-things">Missing A Few Things:</h2>
+<ul>
+<li>Threads</li>
+<li>Encodings</li>
+<li>Freezing Objects</li>
+<li>private/protected</li>
+<li>C Extensions</li>
+<li>File/Network IO
+<ul>
+<li><em>Available in Node!</em></li>
+</ul></li>
+<li><del>method_missing</del></li>
+</ul>
+</section>
+<section id="example-hello-opal" class="slide level1">
+<h1>Example: Hello, Opal</h1>
+<div class="editor">
+<pre class="ruby">
+<code contenteditable>class Greeter
+  def initialize(name = "Opal")
+    @name = name
+  end
+
+  def say_hello
+    puts "Hello, #{@name}!"
+  end
+end
+
+greeter = Greeter.new
+greeter.say_hello
+</code></pre>
+
+<pre class="javascript"><code></code></pre>
+
+<pre class="output"><code></code></pre>
+</div>
+</section>
+<section id="debugging" class="slide level1">
+<h1>Debugging</h1>
+<ul>
+<li>Source Maps</li>
+</ul>
+</section>
+<section id="testing" class="slide level1">
+<h1>Testing</h1>
+<ul>
+<li>RSpec</li>
+</ul>
+</section>
+<section id="frameworks" class="slide level1">
+<h1>Frameworks</h1>
+<ul>
+<li>Vienna</li>
+<li>Lissio</li>
+<li>Volt</li>
+</ul>
+</section>
+<section id="resources" class="slide level1">
+<h1>Resources</h1>
+<ul>
+<li>Project Home:
+<ul>
+<li>opalrb.org</li>
+<li>github.com/opal</li>
+</ul></li>
+<li>Presentations:
+<ul>
+<li>http://www.confreaks.com/videos/2904-rubyconf2013-opal-a-new-hope-for-ruby-programmers</li>
+</ul></li>
+<li>Examples:
+<ul>
+<li>opal-todomvc</li>
+</ul></li>
+</ul>
+<aside class="notes">
+Opal: A New Hope; Old, talks a lot about possibly defunct, smalltalk inspired opal-inspector project
+</aside>
+</section>
+<section id="thanks" class="slide level1">
+<h1>Thanks!</h1>
+<p>github/<em>bspaulding</em></p>
+<p>twitter/<em>bradspaulding</em></p>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.min.js"></script>
+
+  <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: false,
+        theme: 'ruby', // available themes are in /css/theme
+        transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+				parallaxBackgroundImage: 'cross-stitch-texture-gray.png', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+				parallaxBackgroundSize: '2100px 900px', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+//          { src: 'reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; }, }
+//          { src: 'reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+			]});
+    </script>
+		<script src="opal.min.js"></script>
+		<script src="opal-parser.min.js"></script>
+		<script src="editor.js"></script>
+  </body>
+</html>
