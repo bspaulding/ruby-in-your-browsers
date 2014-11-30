@@ -1,0 +1,28 @@
+.reveal .editor pre {
+	width: 49%;
+	float: left;
+	margin-left: 0px;
+}
+
+.reveal .editor pre,
+.reveal .editor pre>code {
+	max-height: 400px;
+	height: 400px;
+}
+
+.reveal .editor pre:first-child {
+	margin-left: 0px;
+	margin-right: 10px;
+}
+
+.reveal .editor pre.output {
+	width: 100%;
+	margin-right: 0px;
+}
+
+.reveal .editor pre.output,
+.reveal .editor pre.output code {
+	height: 100px;
+	max-height: 100px;
+}
+
