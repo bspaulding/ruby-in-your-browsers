@@ -49,10 +49,12 @@
 		editor.addEventListener('input', update);
 	}
 
-	(function() {
+	function initializeEditors() {
 		var editors = document.querySelectorAll(".editor");
 		for (var i = 0; i < editors.length; i += 1) {
 			makeEditor(editors[i]);
 		}
-	}())
+	}
+
+	document.addEventListener('DOMContentLoaded', initializeEditors);
 }())
