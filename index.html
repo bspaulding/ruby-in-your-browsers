@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <title></title>
+  <title>Is That A Ruby In Your Browsers?</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -28,40 +28,99 @@
 
 <section id="is-that-a-ruby-in-your-browsers" class="slide level1">
 <h1>Is That a Ruby In Your Browsers?</h1>
-<p>github/<strong>bspaulding</strong></p>
-<p>twitter/<strong>bradspaulding</strong></p>
+<p><em>An Introduction To Opal</em></p>
+<p><img src="images/ruby-in-browsers.png" /> <img src="images/opal-logo.png" title="Opal logo" /></p>
+</section>
+<section id="psa-for-examples" class="slide level1">
+<h1>PSA for Examples</h1>
+<p><em>Ruby code is compiled and run live, and the JavaScript is verbose!</em></p>
+<p><br/></p>
+<div class="fragment">
+<p>As such, they are best viewed <strong>in a browser</strong></p>
+<p><br/></p>
+</div>
+<div class="fragment">
+<p>So if you are reading a static slide, go here:</p>
+<p><a href="http://bspaulding.github.io/ruby-in-your-browsers" title="bspaulding.github.io/ruby-in-your-browsers">bspaulding.github.io/ruby-in-your-browsers</a></p>
+</div>
 </section>
 <section id="what-is-opal" class="slide level1">
 <h1>What Is Opal?</h1>
-<ul>
-<li>A Ruby to JavaScript Transpiler</li>
-<li>Includes Bridging to JS</li>
-</ul>
-</section>
-<section id="how-ruby-is-it" class="slide level1">
-<h1>How Ruby is it?</h1>
-<h2 id="rubyspec">RubySpec</h2>
-<p>TODO: RubySpec stats</p>
-</section>
-<section id="how-ruby-is-it-1" class="slide level1">
-<h1>How Ruby is it?</h1>
-<h2 id="missing-a-few-things">Missing A Few Things:</h2>
-<ul>
-<li>Threads</li>
-<li>Encodings</li>
-<li>Freezing Objects</li>
-<li>private/protected</li>
-<li>C Extensions</li>
-<li>File/Network IO
-<ul>
-<li><em>Available in Node!</em></li>
-</ul></li>
-<li><del>method_missing</del></li>
-</ul>
-</section>
-<section id="example-hello-opal" class="slide level1">
-<h1>Example: Hello, Opal</h1>
+<div class="fragment">
+<p>Ruby to JavaScript Transpiler</p>
+</div>
+<div class="fragment">
+<p><em>AKA a &quot;source to source&quot; compiler</em></p>
+</div>
+<div class="fragment">
 <div class="editor">
+<pre class="ruby"><code>puts &quot;Hello, World&quot;</code></pre>
+<pre class="output"><code></code></pre>
+<pre class="javascript"><code></code></pre>
+</div>
+</div>
+</section>
+<section id="what-is-opal-1" class="slide level1">
+<h1>What Is Opal?</h1>
+<p>JavaScript bridge</p>
+<p><em>Browser APIs, NodeJS Support</em></p>
+<div class="fragment">
+<div class="editor">
+<pre class="ruby"><code>puts %x{document.title}
+%x{
+  console.log(#{ RUBY_ENGINE_VERSION })
+}</code></pre>
+<pre class="output"><code></code></pre>
+<pre class="javascript"><code></code></pre>
+</div>
+</div>
+</section>
+<section id="what-is-opal-2" class="slide level1">
+<h1>What Is Opal?</h1>
+<p>JavaScript bridge</p>
+<p>TODO: Native module demo</p>
+</section>
+<section id="example-fibonacci" class="slide level1">
+<h1>Example: Fibonacci</h1>
+<div class="editor vsplit">
+<pre class="ruby"><code>def fib(n)
+  n &lt;= 1 ? 1 : fib(n - 1) + fib(n - 2)
+end
+
+puts (1..10).
+  map {|n| fib n }.
+  map(&amp;:to_s).
+  join(&quot;, &quot;)</code></pre>
+<pre class="javascript"><code></code></pre>
+<pre class="output"><code></code></pre>
+</div>
+<aside class="notes">
+This example shows off several ruby features: - ternary operator - implicit returns - recursion - ranges - enumeration with blocks - symbol to_proc
+</aside>
+</section>
+<section id="example-hamming-distance" class="slide level1">
+<h1>Example: Hamming Distance</h1>
+<div class="editor vsplit">
+<pre class="ruby"><code>def hamming(a,b)
+    a.split(&quot;&quot;).
+    zip(b.split(&quot;&quot;)).
+    select {|(a,b)| a != b }.
+    length
+end
+
+puts hamming(&quot;rubyist&quot;, &quot;opalist&quot;)
+puts hamming(&quot;happy&quot;, &quot;yappy&quot;)
+puts hamming(&quot;goose&quot;, &quot;geese&quot;)</code></pre>
+<pre class="javascript"><code></code></pre>
+<pre class="output"><code></code></pre>
+</div>
+<aside class="notes">
+
+</aside>
+</section>
+<section id="example-classes" class="slide level1">
+<h1>Example: Classes</h1>
+<div class="editor vsplit">
 <pre class="ruby">
 <code contenteditable>class Greeter
   def initialize(name = "Opal")
@@ -69,7 +128,17 @@
   end
 
   def say_hello
-    puts "Hello, #{@name}!"
+    puts greeting
+  end
+
+  def greeting
+    "Hello, #{@name}!"
+  end
+end
+
+class LoudGreeter < Greeter
+  def greeting
+    super.upcase
   end
 end
 
@@ -82,41 +151,112 @@ greeter.say_hello
 <pre class="output"><code></code></pre>
 </div>
 </section>
+<section id="example-modules" class="slide level1">
+<h1>Example: Modules</h1>
+<div class="editor vsplit">
+<pre class="ruby"><code>class Array
+  def all?
+    each {|n| return false unless n }
+  end
+end
+
+module Validatable
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
+
+  def valid?
+    self.class.validations.
+      map {|attribute, block|
+        block.call(self.send(attribute))
+      }.all?
+  end
+
+  module ClassMethods
+    def validate(attribute, &amp;block)
+      validations[attribute] = block
+    end
+
+    def validations
+      @validations ||= {}
+    end
+  end
+end
+
+class Person
+  include Validatable
+
+  attr_accessor :name
+
+  validate(:name) {|value|
+    !value.to_s.empty?
+  }
+end
+
+brad = Person.new
+puts brad.valid?
+brad.name = &quot;Bradley&quot;
+puts brad.valid?</code></pre>
+<pre class="javascript"><code></code></pre>
+<pre class="output"><code></code></pre>
+</div>
+</section>
+<section id="how-ruby-is-it" class="slide level1">
+<h1>How Ruby is it?</h1>
+<h2 id="rubyspec">RubySpec</h2>
+<p>TODO: RubySpec stats</p>
+</section>
+<section id="how-ruby-is-it-1" class="slide level1">
+<h1>How Ruby is it?</h1>
+<h2 id="missing-a-few-things">Missing A Few Things:</h2>
+<ul>
+<li class="fragment">Threads</li>
+<li class="fragment">Encodings</li>
+<li class="fragment">Freezing Objects</li>
+<li class="fragment">private/protected</li>
+<li class="fragment">C Extensions</li>
+<li class="fragment">File/Network IO
+<ul>
+<li class="fragment"><em>Available in Node!</em></li>
+</ul></li>
+<li class="fragment"><del>method_missing</del></li>
+</ul>
+</section>
 <section id="debugging" class="slide level1">
 <h1>Debugging</h1>
 <ul>
-<li>Source Maps</li>
+<li class="fragment">Source Maps</li>
 </ul>
 </section>
 <section id="testing" class="slide level1">
 <h1>Testing</h1>
 <ul>
-<li>RSpec</li>
+<li class="fragment">RSpec</li>
 </ul>
 </section>
 <section id="frameworks" class="slide level1">
 <h1>Frameworks</h1>
 <ul>
-<li>Vienna</li>
-<li>Lissio</li>
-<li>Volt</li>
+<li class="fragment">Vienna</li>
+<li class="fragment">Lissio</li>
+<li class="fragment">Volt</li>
 </ul>
 </section>
 <section id="resources" class="slide level1">
 <h1>Resources</h1>
 <ul>
-<li>Project Home:
+<li class="fragment">Project Home:
 <ul>
-<li>opalrb.org</li>
-<li>github.com/opal</li>
+<li class="fragment">opalrb.org</li>
+<li class="fragment">github.com/opal</li>
 </ul></li>
-<li>Presentations:
+<li class="fragment">Presentations:
 <ul>
-<li>http://www.confreaks.com/videos/2904-rubyconf2013-opal-a-new-hope-for-ruby-programmers</li>
+<li class="fragment">http://www.confreaks.com/videos/2904-rubyconf2013-opal-a-new-hope-for-ruby-programmers</li>
 </ul></li>
-<li>Examples:
+<li class="fragment">Examples:
 <ul>
-<li>opal-todomvc</li>
+<li class="fragment">opal-todomvc</li>
 </ul></li>
 </ul>
 <aside class="notes">
@@ -144,8 +284,8 @@ Opal: A New Hope; Old, talks a lot about possibly defunct, smalltalk inspired op
         center: false,
         theme: 'ruby', // available themes are in /css/theme
         transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
-				parallaxBackgroundImage: 'cross-stitch-texture-gray.png', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
-				parallaxBackgroundSize: '2100px 900px', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
+				// parallaxBackgroundImage: 'images/browsers-parallax.png', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+				// parallaxBackgroundSize: '1633px 700px', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
 
         // Optional libraries used to extend on reveal.js
         dependencies: [
@@ -153,8 +293,8 @@ Opal: A New Hope; Old, talks a lot about possibly defunct, smalltalk inspired op
           { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
           { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
           { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-//          { src: 'reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; }, }
-//          { src: 'reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; }, }
+          // { src: 'reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
 			]});
     </script>
 		<script src="opal.min.js"></script>
