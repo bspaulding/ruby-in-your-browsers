@@ -9,6 +9,22 @@ twitter/**bradspaulding**
 - A Ruby to JavaScript Transpiler
 - Includes Bridging to JS
 
+# Example: Fib / Recursion
+
+- TODO
+
+# Example: Block Enumeration
+
+- TODO map example
+
+# Example: Classes
+
+- TODO: Move Greeter here
+
+# Example: Modules
+
+- TODO
+
 # How Ruby is it?
 
 ## RubySpec
