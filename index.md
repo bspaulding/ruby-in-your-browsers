@@ -70,12 +70,12 @@ puts %x{document.title}
 
 JavaScript bridge
 
-TODO: Native module demo
 <div class="editor">
 ```ruby
-window = Native(`window`)
-puts window[:location][:href]
-# window.alert('+1 for native bridging!')
+require 'native'
+win = Native(`window`)
+puts win.location.href
+# win.alert('+1 for native bridging!')
 ```
 ```output
 ```
@@ -228,28 +228,79 @@ puts brad.valid?
 
 ## RubySpec
 
-TODO: RubySpec stats
+<table style="width: 80%; margin: 20px auto;">
+  <thead>
+		<tr>
+			<th>Version</th>
+			<th>Date</th>
+			<th>Examples</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>0.5.5</td>
+			<td>2013-11</td>
+			<td>2,715*</td>
+		</tr><tr>
+			<td>0.6.3</td>
+			<td>2014-11</td>
+			<td>3,070</td>
+		</tr><tr>
+			<td>0.7.0.beta1</td>
+			<td>2014-10</td>
+			<td>3,445</td>
+		</tr><tr>
+			<td>0.7.0.beta2</td>
+			<td>2014-11</td>
+			<td>3,601</td>
+		</tr><tr>
+			<td>0.7.0.beta3</td>
+			<td>2014-11</td>
+			<td>3,603</td>
+		</tr><tr>
+	</tbody>
+</table>
+
+*For context, ~20k rubyspecs total*
 
 # How Ruby is it?
 
 ## Missing A Few Things:
 
-- Threads
+- Mutable Strings / Symbols
 - Encodings
-- Freezing Objects
+- Threads
+- Frozen Objects
+- method_added/method_removed
+	- *considered a bug, will be fixed*
 - private/protected
 - C Extensions
 - File/Network IO
-	- _Available in Node!_
+	- _coming in 0.7 for Node.js_
 - ~~method_missing~~
 
 # Debugging
 
-- Source Maps
+![](images/source-map.png)
 
 # Testing
 
-- RSpec
+RSpec via opal-rspec
+
+. . .
+
+<br/>
+Adds async support:
+
+```ruby
+async 'HTTP requests should work' do
+  HTTP.get('/users/1.json') do |res|
+    run_async {
+      expect(res).to be_ok
+    }
+  end
+end
+```
 
 # Frameworks
 

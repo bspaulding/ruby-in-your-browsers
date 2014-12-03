@@ -78,7 +78,14 @@
 <section id="what-is-opal-2" class="slide level1">
 <h1>What Is Opal?</h1>
 <p>JavaScript bridge</p>
-<p>TODO: Native module demo</p>
+<div class="editor">
+<pre class="ruby"><code>require &#39;native&#39;
+win = Native(`window`)
+puts win.location.href
+# win.alert(&#39;+1 for native bridging!&#39;)</code></pre>
+<pre class="output"><code></code></pre>
+<pre class="javascript"><code></code></pre>
+</div>
 </section>
 <section id="example-fibonacci" class="slide level1">
 <h1>Example: Fibonacci</h1>
@@ -204,35 +211,117 @@ puts brad.valid?</code></pre>
 <section id="how-ruby-is-it" class="slide level1">
 <h1>How Ruby is it?</h1>
 <h2 id="rubyspec">RubySpec</h2>
-<p>TODO: RubySpec stats</p>
+<table style="width: 80%; margin: 20px auto;">
+  <thead>
+        <tr>
+            <th>
+Version
+</th>
+            <th>
+Date
+</th>
+            <th>
+Examples
+</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+0.5.5
+</td>
+            <td>
+2013-11
+</td>
+            <td>
+2,715*
+</td>
+        </tr><tr>
+            <td>
+0.6.3
+</td>
+            <td>
+2014-11
+</td>
+            <td>
+3,070
+</td>
+        </tr><tr>
+            <td>
+0.7.0.beta1
+</td>
+            <td>
+2014-10
+</td>
+            <td>
+3,445
+</td>
+        </tr><tr>
+            <td>
+0.7.0.beta2
+</td>
+            <td>
+2014-11
+</td>
+            <td>
+3,601
+</td>
+        </tr><tr>
+            <td>
+0.7.0.beta3
+</td>
+            <td>
+2014-11
+</td>
+            <td>
+3,603
+</td>
+        </tr><tr>
+    </tbody>
+</table>
+
+<p><em>For context, ~20k rubyspecs total</em></p>
 </section>
 <section id="how-ruby-is-it-1" class="slide level1">
 <h1>How Ruby is it?</h1>
 <h2 id="missing-a-few-things">Missing A Few Things:</h2>
 <ul>
-<li class="fragment">Threads</li>
+<li class="fragment">Mutable Strings / Symbols</li>
 <li class="fragment">Encodings</li>
-<li class="fragment">Freezing Objects</li>
+<li class="fragment">Threads</li>
+<li class="fragment">Frozen Objects</li>
+<li class="fragment">method_added/method_removed
+<ul>
+<li class="fragment"><em>considered a bug, will be fixed</em></li>
+</ul></li>
 <li class="fragment">private/protected</li>
 <li class="fragment">C Extensions</li>
 <li class="fragment">File/Network IO
 <ul>
-<li class="fragment"><em>Available in Node!</em></li>
+<li class="fragment"><em>coming in 0.7 for Node.js</em></li>
 </ul></li>
 <li class="fragment"><del>method_missing</del></li>
 </ul>
 </section>
 <section id="debugging" class="slide level1">
 <h1>Debugging</h1>
-<ul>
-<li class="fragment">Source Maps</li>
-</ul>
+<figure>
+<img src="images/source-map.png" />
+</figure>
 </section>
 <section id="testing" class="slide level1">
 <h1>Testing</h1>
-<ul>
-<li class="fragment">RSpec</li>
-</ul>
+<p>RSpec via opal-rspec</p>
+<div class="fragment">
+<p><br/> Adds async support:</p>
+<pre class="ruby"><code>async &#39;HTTP requests should work&#39; do
+  HTTP.get(&#39;/users/1.json&#39;) do |res|
+    run_async {
+      expect(res).to be_ok
+    }
+  end
+end</code></pre>
+</div>
 </section>
 <section id="frameworks" class="slide level1">
 <h1>Frameworks</h1>
