@@ -71,6 +71,17 @@ puts %x{document.title}
 JavaScript bridge
 
 TODO: Native module demo
+<div class="editor">
+```ruby
+window = Native(`window`)
+puts window[:location][:href]
+# window.alert('+1 for native bridging!')
+```
+```output
+```
+```javascript
+```
+</div>
 
 # Example: Fibonacci
 
