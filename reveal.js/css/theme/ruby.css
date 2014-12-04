@@ -33,6 +33,10 @@ pre, code {
   background: rgba(223, 0, 0, 0.99);
   text-shadow: none; }
 
+.reveal figcaption {
+	font-size: 18px;
+}
+
 /*********************************************
  * HEADERS
  *********************************************/
