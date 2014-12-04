@@ -30,6 +30,12 @@
 <h1>Is That a Ruby In Your Browsers?</h1>
 <p><em>An Introduction To Opal</em></p>
 <p><img src="images/ruby-in-browsers.png" /> <img src="images/opal-logo.png" title="Opal logo" /></p>
+<aside class="notes">
+<ul>
+<li class="fragment">Welcome</li>
+<li class="fragment">Introduce yourself</li>
+</ul>
+</aside>
 </section>
 <section id="psa-for-examples" class="slide level1">
 <h1>PSA for Examples</h1>
@@ -87,6 +93,32 @@ puts win.location.href
 <pre class="javascript"><code></code></pre>
 </div>
 </section>
+<section id="what-is-opal-3" class="slide level1">
+<h1>What Is Opal?</h1>
+<p><img width=200 height=200
+         src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Rainbow_Shield_Mintabie_Opal_Pendant.jpg/480px-Rainbow_Shield_Mintabie_Opal_Pendant.jpg"/></p>
+<div class="fragment">
+<blockquote>
+<p><em>&quot;a gemstone consisting of hydrated silica, typically <strong>semitransparent</strong> and showing varying colors against a pale or dark background&quot;</em></p>
+</blockquote>
+<blockquote>
+<p>New Oxford American Dictionary</p>
+</blockquote>
+</div>
+</section>
+<section id="what-is-opal-4" class="slide level1">
+<h1>What Is Opal?</h1>
+<p><img width=200 height=200
+         src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Rainbow_Shield_Mintabie_Opal_Pendant.jpg/480px-Rainbow_Shield_Mintabie_Opal_Pendant.jpg"/></p>
+<p>National Gemstone of Australia</p>
+<p><a href="http://en.wikipedia.org/wiki/Opal">Wikipedia</a></p>
+</section>
+<section class="slide level1">
+
+<figure>
+<img src="images/get_on_with_it.png" alt="http://www.patrickmclaurin.com/wordpress/wp-content/uploads/2013/06/get_on_with_it.png" /><figcaption>http://www.patrickmclaurin.com/wordpress/wp-content/uploads/2013/06/get_on_with_it.png</figcaption>
+</figure>
+</section>
 <section id="example-fibonacci" class="slide level1">
 <h1>Example: Fibonacci</h1>
 <div class="editor vsplit">
@@ -102,7 +134,16 @@ puts (1..10).
 <pre class="output"><code></code></pre>
 </div>
 <aside class="notes">
-This example shows off several ruby features: - ternary operator - implicit returns - recursion - ranges - enumeration with blocks - symbol to_proc
+This example shows off several ruby features:
+<ul>
+<li>
+implicit returns
+<li>
+ranges
+<li>
+enumeration with blocks
+<li>
+symbol to_proc
 </aside>
 </section>
 <section id="example-hamming-distance" class="slide level1">
@@ -122,7 +163,15 @@ puts hamming(&quot;goose&quot;, &quot;geese&quot;)</code></pre>
 <pre class="output"><code></code></pre>
 </div>
 <aside class="notes">
-
+Ruby features:
+<ul>
+<li>
+Collection helpers: split, zip, select/filter
+<li>
+anonymous blocks
+<li>
+feaux pattern matching for block arg
+</ul>
 </aside>
 </section>
 <section id="example-classes" class="slide level1">
@@ -280,13 +329,17 @@ Examples
     </tbody>
 </table>
 
+<p>* not all passing (for me!)</p>
 <p><em>For context, ~20k rubyspecs total</em></p>
 </section>
 <section id="how-ruby-is-it-1" class="slide level1">
 <h1>How Ruby is it?</h1>
 <h2 id="missing-a-few-things">Missing A Few Things:</h2>
 <ul>
-<li class="fragment">Mutable Strings / Symbols</li>
+<li class="fragment">Mutable Strings / Symbols
+<ul>
+<li class="fragment">no <code>#&lt;&lt;</code> or <code>#gsub!</code></li>
+</ul></li>
 <li class="fragment">Encodings</li>
 <li class="fragment">Threads</li>
 <li class="fragment">Frozen Objects</li>
@@ -323,29 +376,100 @@ Examples
 end</code></pre>
 </div>
 </section>
+<section id="notable-libraries" class="slide level1">
+<h1>Notable Libraries</h1>
+<h2 id="opal-browser">opal-browser</h2>
+<p>Browser API wrapper:</p>
+<p>DOM, CSS, AJAX, WebSockets, SSE, History, Storage, SQL</p>
+<pre class="ruby"><code>$document.ready do
+  DOM {
+    div.info {
+      span.red &quot;I&#39;m all cooked up.&quot;
+    }
+  }.append_to($document.body)
+end</code></pre>
+</section>
+<section id="notable-libraries-1" class="slide level1">
+<h1>Notable Libraries</h1>
+<h2 id="opal-jquery">opal-jquery</h2>
+<p>&quot;toll-free&quot; bridge to JQuery</p>
+<pre class="ruby"><code>foos = Element.find(&#39;.foo&#39;)
+# =&gt; [&lt;div class=&quot;foo&quot;&gt;, ...]
+
+foos.class
+# =&gt; JQuery
+
+foos.on(:click) do
+  alert &quot;element was clicked&quot;
+end</code></pre>
+</section>
+<section id="notable-libraries-2" class="slide level1">
+<h1>Notable Libraries</h1>
+<h2 id="templating">Templating</h2>
+<p>support for erb and haml</p>
+<pre class="ruby"><code>require &#39;template&#39;
+
+template = Template[&#39;user&#39;]
+context  = User.new(&#39;Ford Prefect&#39;)
+
+puts template.render(context)
+# =&gt; &quot;&lt;div&gt;...&lt;/div&gt;&quot;
+
+Template.paths
+# =&gt; [#&lt;Template: &#39;views/user&#39;&gt;, #&lt;Template: &#39;login&#39;&gt;]</code></pre>
+</section>
+<section id="notable-libraries-3" class="slide level1">
+<h1>Notable Libraries</h1>
+<h2 id="promise">Promise</h2>
+<pre class="ruby"><code>require &#39;promise&#39;
+first = get_json &#39;/users/1.json&#39;
+second = get_json &#39;/users/2.json&#39;
+
+Promise.when(first, second).then do |user1, user2|
+  puts &quot;got users: #{user1}, #{user2}&quot;
+end.fail do
+  alert &quot;Something bad happened&quot;
+end</code></pre>
+</section>
 <section id="frameworks" class="slide level1">
 <h1>Frameworks</h1>
 <ul>
-<li class="fragment">Vienna</li>
-<li class="fragment">Lissio</li>
-<li class="fragment">Volt</li>
+<li class="fragment"><a href="https://github.com/opal/vienna">Vienna</a>
+<ul>
+<li class="fragment">client side</li>
+<li class="fragment">MVC</li>
+</ul></li>
+<li class="fragment"><a href="https://github.com/meh/lissio">Lissio</a>
+<ul>
+<li class="fragment">client side</li>
+<li class="fragment">Component centric</li>
+</ul></li>
+<li class="fragment"><a href="https://github.com/voltrb/volt">Volt</a>
+<ul>
+<li class="fragment">full stack, similar to meteor</li>
+<li class="fragment">hybrid mvc / component structure</li>
+<li class="fragment">reactive view bindings</li>
+<li class="fragment">persistence</li>
+<li class="fragment">messaging</li>
+</ul></li>
 </ul>
 </section>
 <section id="resources" class="slide level1">
 <h1>Resources</h1>
 <ul>
-<li class="fragment">Project Home:
+<li class="fragment">Project Home
 <ul>
-<li class="fragment">opalrb.org</li>
-<li class="fragment">github.com/opal</li>
+<li class="fragment"><a href="http://opalrb.org">opalrb.org</a></li>
+<li class="fragment"><a href="http://opalrb.org/try/">github.com/opal</a></li>
 </ul></li>
-<li class="fragment">Presentations:
+<li class="fragment">Presentations
 <ul>
-<li class="fragment">http://www.confreaks.com/videos/2904-rubyconf2013-opal-a-new-hope-for-ruby-programmers</li>
+<li class="fragment"><a href="http://www.confreaks.com/videos/2904-rubyconf2013-opal-a-new-hope-for-ruby-programmers">Opal: A New Hope</a></li>
 </ul></li>
-<li class="fragment">Examples:
+<li class="fragment">Examples
 <ul>
-<li class="fragment">opal-todomvc</li>
+<li class="fragment"><a href="http://opalrb.org/try/">opalrb.org/try</a></li>
+<li class="fragment"><a href="https://github.com/opal/opal-todos">opal-todos</a></li>
 </ul></li>
 </ul>
 <aside class="notes">
@@ -354,6 +478,9 @@ Opal: A New Hope; Old, talks a lot about possibly defunct, smalltalk inspired op
 </section>
 <section id="thanks" class="slide level1">
 <h1>Thanks!</h1>
+<figure>
+<img src="images/ruby-in-browsers.png" />
+</figure>
 <p>github/<em>bspaulding</em></p>
 <p>twitter/<em>bradspaulding</em></p>
 </section>
@@ -386,8 +513,10 @@ Opal: A New Hope; Old, talks a lot about possibly defunct, smalltalk inspired op
           // { src: 'reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
 			]});
     </script>
-		<script src="opal.min.js"></script>
-		<script src="opal-parser.min.js"></script>
+		<script src="lib/opal/opal.min.js"></script>
+		<script src="lib/opal/opal-parser.min.js"></script>
+		<script src="lib/opal/native.min.js"></script>
+		<script src="lib/opal/template.min.js"></script>
 		<script src="editor.js"></script>
   </body>
 </html>
